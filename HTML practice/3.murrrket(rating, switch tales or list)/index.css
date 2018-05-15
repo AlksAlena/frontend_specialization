@@ -1,0 +1,232 @@
+body {
+  margin: 0;
+  padding: 0;
+  color: #262626;
+}
+header {
+  padding: 20px 0;
+  background-color: #263b4d;
+}
+header, footer {
+  color: #fff;
+}
+.main-title {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.main-title small {
+  display: block;
+  color: pink;
+}
+.shop {
+  padding: 100px;
+  text-align: center;
+}
+.shop .wrap {
+  text-align: left;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.switch#tale:checked ~ .wrap > .shop-item {
+  display: inline-block;
+}
+.switch#list:checked ~ .wrap > .shop-item {
+  display: block;
+  width: auto;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+}
+.switch#list:checked ~ .wrap > .shop-item .shop-item--top {
+  display: inline-block;
+  width: 250px;
+  vertical-align: bottom;
+}
+.switch#list:checked ~ .wrap > .shop-item .item-title {
+  margin: 5px;
+  margin-top: 9px;
+}
+.switch#list:checked ~ .wrap > .shop-item > .info,
+.switch#list:checked ~ .wrap > .shop-item > .description {
+  display: inline-block;
+  width: 33%;
+}
+.switch#list:checked ~ .wrap > .shop-item > .info {
+  padding-bottom: 0;
+}
+.switch#list:checked ~ .wrap > .shop-item > .info .price {
+  margin-bottom: 5px;
+}
+.switch#list:checked ~ .wrap > .shop-item > .description {
+  height: auto;
+  overflow-y: hidden;
+  vertical-align: bottom;
+  padding-bottom: 7px;
+}
+.shop-item {
+  display: inline-block;
+  width: 250px;
+  border-radius: 5px;
+  margin: 15px;
+  vertical-align: top;
+}
+.shop-item:hover {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+}
+.shop-item--top:hover .item-img img {
+  opacity: 0.7;
+}
+.shop-item--top:hover .item-title a {
+  color: #ce1936;
+}
+.item-img {
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+}
+.item-img img {
+  max-width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.shop-item:nth-child(3) img {
+  bottom: -90px;
+}
+.shop-item:nth-child(5) img {
+  bottom: -60px;
+}
+.shop-item:nth-child(7) img {
+  bottom: -91px;
+}
+.shop-item:nth-child(8) img {
+  bottom: -81px;
+}
+.info,
+.description {
+  padding: 0 20px 15px 20px;
+  text-align: left;
+}
+.item-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  margin-top: 20px;;
+}
+.item-title a {
+  color: midnightblue;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.item-title a:hover {
+  color: #ce1936;
+}
+.category {
+  margin-bottom: 10px;
+}
+.category a {
+  color: dimgray;
+  font-size: 14px;
+}
+.category a:hover {
+  color: darkslategray;
+  text-decoration: none;
+}
+.stars {
+  cursor: pointer;
+  position: relative;
+  height: 20px;
+  line-height: 20px;
+}
+.stars input {
+  display: none;
+}
+.star {
+  position: absolute;
+  top: 0;
+  font-size: 24px;
+  color: grey;
+}
+.rating-05 {
+  left: 0;
+  clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+}
+.rating-10 {
+  left: 0;
+  clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+}
+.rating-15 {
+  left: 20px;
+  clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+}
+.rating-20 {
+  left: 20px;
+  clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+}
+.rating-25 {
+  left: 40px;
+  clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+}
+.rating-30 {
+  left: 40px;
+  clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+}
+.rating-35 {
+  left: 60px;
+  clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+}
+.rating-40 {
+  left: 60px;
+  clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+}
+.rating-45 {
+  left: 80px;
+  clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+}
+.rating-50 {
+  left: 80px;
+  clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+}
+label[class*="rating-"]:hover, 
+input:checked ~ label[class*="rating-"],
+label[class*="rating-"]:hover ~ .star {
+  color: gold;
+}
+.price {
+  color: #8a1124;
+  text-transform: uppercase;
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: -1px;
+}
+.price span {
+  margin-left: 10px;
+  color: dimgray;
+  text-decoration: line-through;
+  font-size: 16px;
+}
+.description {
+  padding: 0 20px 20px;
+  font-size: 18px;
+  line-height: 18px;
+  height: 200px;
+  overflow-y: auto;
+}
+footer {
+  height: 70px;
+  background-color: dimgray;
+  line-height: 70px;
+  padding: 0 20px;
+}
+.author {
+  text-decoration: none;
+  color: #d2d2d2;;
+}
+.author:hover {
+  color: pink;
+}

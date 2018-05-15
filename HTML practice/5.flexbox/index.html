@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <header>
+    <h1>Бабуленькины котятки</h1>
+  </header>
+
+  <div class="breed" id="abis"></div>
+  <div class="breed" id="british"></div>
+  <div class="breed" id="blueros"></div>
+  <div class="breed" id="siam"></div>
+
+  <main id="main">
+    <aside class="left_column">
+      <ul class="menu">
+        <li><a class="menu_item" href="#abis">Абиссинская</a></li>
+        <li><a class="menu_item" href="#british">Британская</a></li>
+        <li><a class="menu_item" href="#blueros">Русская голубая</a></li>
+        <li><a class="menu_item" href="#siam">Сиамская</a></li>
+      </ul>
+    </aside>
+    <section class="center_column">
+      <div class="cat-image" data-cat-name="Пушок" data-cat-age="1г 5мес">
+        <img src="img/abis.jpg" alt="abis cat" data-breed="abis" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Нэнси" data-cat-age="2г 3мес">
+        <img src="img/british2.jpg" alt="british cat" data-breed="british" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Никки" data-cat-age="5г 1мес">
+        <img src="img/siam.jpg" alt="siam cat" data-breed="siam" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Фрей" data-cat-age="3г 7мес">
+        <img src="img/british.jpg" alt="british cat" data-breed="british" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Ченти" data-cat-age="1г 8мес">
+        <img src="img/blueros.jpg" alt="blueros cat" data-breed="blueros" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Изумруд" data-cat-age="2г 2мес">
+        <img src="img/abis2.jpg" alt="abis cat" data-breed="abis" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Фишат" data-cat-age="3г 4мес">
+        <img src="img/siam2.jpg" alt="siam" data-breed="siam" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Цезарь" data-cat-age="4г 5мес">
+        <img src="img/blueros5.jpg" alt="blueros cat" data-breed="blueros" width="100%" height="100%">
+      </div>
+
+      <div class="cat-image" data-cat-name="Пушок" data-cat-age="1г 5мес">
+        <img src="img/abis.jpg" alt="abis cat" data-breed="abis" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Нэнси" data-cat-age="2г 3мес">
+        <img src="img/british2.jpg" alt="british cat" data-breed="british" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Никки" data-cat-age="5г 1мес">
+        <img src="img/siam.jpg" alt="siam cat" data-breed="siam" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Фрей" data-cat-age="3г 7мес">
+        <img src="img/british.jpg" alt="british cat" data-breed="british" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Ченти" data-cat-age="1г 8мес">
+        <img src="img/blueros.jpg" alt="blueros cat" data-breed="blueros" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Изумруд" data-cat-age="2г 2мес">
+        <img src="img/abis2.jpg" alt="abis cat" data-breed="abis" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Фишат" data-cat-age="3г 4мес">
+        <img src="img/siam2.jpg" alt="siam" data-breed="siam" width="100%" height="100%">
+      </div>
+      <div class="cat-image" data-cat-name="Цезарь" data-cat-age="4г 5мес">
+        <img src="img/blueros2.jpg" alt="blueros cat" data-breed="blueros" width="100%" height="100%">
+      </div>
+    </section>
+
+    <aside class="right_column">
+      <h2>Рейтинг</h2>
+      <input class="filter" type="checkbox"><span class="filter">по убыванию</span>
+      <ul class="rating">
+        <li class="rating_item" data-rate="9">
+          <div class="title">Абиссинская</div>
+          <div class="rate_color"><span class="rate"></span></div>
+          <div class="rate_number">9</div>
+        </li>
+        <li class="rating_item" data-rate="8">
+          <div class="title">Британская</div>
+          <div class="rate_color"><span class="rate"></span></div>
+          <div class="rate_number">8</div>
+        </li>
+        <li class="rating_item"  data-rate="10">
+          <div class="title">Русская голубая</div>
+          <div class="rate_color"><span class="rate"></span></div>
+          <div class="rate_number">10</div>
+        </li>
+        <li class="rating_item" data-rate="4">
+          <div class="title">Сиамская</div>
+          <div class="rate_color"><span class="rate"></span></div>
+          <div class="rate_number">4</div>
+        </li>
+      </ul>
+    </aside>
+  </main>
+  <footer>
+    <div class="rights">&copy; ООО Бабуленькины котятки, 2015</div>
+    <div class="contacts">Наш адрес: улица Котовая, д.5</div>
+  </footer>
+</body>
+</html>
