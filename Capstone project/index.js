@@ -1,145 +1,153 @@
 window.onload = function() {
 
-  function Game(desk, emodji) {
-    this.emodji = emodji;
+  function Game(desk, timer, popup) {
     this.desk = desk;
     this.cardsList = [];
-    this.init =  function() {
+    this.timer = timer;
+    this.popup = popup;
+    this.isWin = false;
+    this.init =  function(emodji) {
+      var setEmodji = emodji.concat(emodji); // 12 icons
       var cards = this.desk.querySelectorAll('.card_container');
       for (var i = 0; i < cards.length; i++) {
-        var icon = this.setContent();
+        var icon = this.setContent(setEmodji);
         this.cardsList[i] = new Card(cards[i], i, icon);
       }
-      console.log(this.cardsList)
     };
-    this.setContent = function() {
-      var number = this.randomIconNumber();
-      var icon = this.emodji[number].count < 2 ? 
-        ( this.emodji[number].count += 1, this.emodji[number].content ) : this.setContent();
+    this.setContent = function(setEmodji) {
+      var randomNumber = Math.floor(Math.random() * 10000) % setEmodji.length;
+      var icon = setEmodji.splice(randomNumber, 1)[0];
       return icon;
     };
-    this.randomIconNumber = function() {
-      var max = 12;
-      var number = Math.floor(Math.random() * max) % 6;
-      return number;
-    };
-    this.equal = function(cardsIndexes) {
-      var _cardsIndexes = cardsIndexes.slice();
-      var prevIndex = _cardsIndexes.pop();
-      var nextIndex = _cardsIndexes.pop();
-      var prevCard = this.cardsList[prevIndex];
-      var nextCard = this.cardsList[nextIndex];
-
-      if (prevCard.content === nextCard.content) {
-        prevCard.value.lastElementChild.classList.add('equal');
-        nextCard.value.lastElementChild.classList.add('equal');
-        prevCard.setRotateState('equal');
-        nextCard.setRotateState('equal');
-        return true;
+    this.togglePopup = function(result) {
+      var message = '', text = '';
+      this.popup.classList.toggle('active');
+      if (result) {
+        text = 'Win';
+        for (var i = 0; i < 3; i++) {
+          message += '<span class="message-win">' + text[i] + '</span>';
+        }
+      } else {
+        text = 'Lose';
+        for (var i = 0; i < 4; i++) {
+          message += '<span class="message-lose">' + text[i] + '</span>';
+        }
       }
-      else {
-        prevCard.value.lastElementChild.classList.add('unequal');
-        nextCard.value.lastElementChild.classList.add('unequal');
-        prevCard.setRotateState('unequal');
-        nextCard.setRotateState('unequal');
-        return false;
-      }
+      this.popup.firstElementChild.firstElementChild.innerHTML = message;
     };
+    this.rePlay = function(emodji) {
+      this.togglePopup();
+      this.isWin = false;
+      this.timer.innerHTML = '01:00';
+      this.cardsList.forEach(function(item) {
+        var card = item.elem.lastElementChild;
+        if (item.isOpen) item.rotate();
+        if (card.classList.contains('unequal')) card.classList.remove('unequal');
+        if (card.classList.contains('equal')) card.classList.remove('equal');
+      });
+      this.cardsList = [];
+      this.init(emodji);
+    }
   }
 
   function Card(elem, id, icon) {
-    this.value = elem;
-    this.value.id = id;
-    this.content = icon;
-    this.showState = false;
-    this.rotateState = true;
-    var backSide = this.value.lastElementChild;
-    backSide.setAttribute('data-icon', icon);
+    this.elem = elem;
+    this.elem.id = id;
+    this.icon = icon;
+    this.isOpen = false;
+    this.isSingle = false;
+    this.isNotEqual = false;
+    this.toRotate = true;    
+    this.elem.lastElementChild.dataset.icon = icon;
   }
   Card.prototype.rotate = function() {
-    this.value.classList.toggle('active');
-    this.setShowState();
+    this.elem.classList.toggle('active');
+    if (this.elem.classList.contains('active')) {
+      this.isOpen = true;
+      this.toRotate = false;
+    } else this.isOpen = false;
   };
-  Card.prototype.setShowState = function() {
-    if (this.value.classList.contains('active')) this.showState = true;
-    else this.showState = false;
-  };
-  Card.prototype.setRotateState = function(classElem) {
-    if (this.value.lastElementChild.classList.contains(classElem)) {
-      this.rotateState = false;
+  Card.prototype.isEqual = function(nextCard) {
+    if (this.icon === nextCard.icon) {
+      this.elem.lastElementChild.classList.add('equal');
+      nextCard.elem.lastElementChild.classList.add('equal');
+    } else {
+      this.elem.lastElementChild.classList.add('unequal');
+      nextCard.elem.lastElementChild.classList.add('unequal');
+      this.isNotEqual = true;
+      nextCard.isNotEqual = true;
     }
-    else this.rotateState = true;
   };
 
-  var emodji = [
-  	{
-  		content: '🐱',
-  		count: 0
-  	},
-  	{
-  		content: '🐯',
-  		count: 0
-  	},
-  	{
-  		content: '🐻',
-  		count: 0
-  	},
-  	{
-  		content: '🦄',
-  		count: 0
-  	},
-  	{
-  		content: '🦁',
-  		count: 0
-  	},
-  	{
-  		content: '🐼',
-  		count: 0
-  	}
-  ];
+  var emodji = ['🐱', '🐯', '🐻', '🦄', '🦁', '🐼'];
+  var desk = document.querySelector('.board');
+  var timer = document.querySelector('.timer');
+  var popup = document.querySelector('.popup');
+  var game = new Game(desk, timer, popup);
+  game.init(emodji);
+  var idTimer = null;
+  var timer = 59;
 
-  var desk = document.getElementById('gamedesk');
-	var game = new Game(desk, emodji);
-  game.init();
-  var cardsIndexes = [];
-  var currentActiveCount = 0;
-  game.desk.addEventListener("click", function(event) {
-    // 3 клика подряд
-    if (event.target.id !== 'gamedesk' && (currentActiveCount < 3)) {
-      var index = parseInt(event.target.parentElement.id, 10);
-      // если карта не заблокирована
-      if (game.cardsList[index].rotateState) { //  0 || 1 || 2
-        game.cardsList[index].rotate();
-
-        if (game.cardsList[index].showState) {
-          cardsIndexes.push(index);
-          if (cardsIndexes.length == 2) {
-            game.equal(cardsIndexes);
-          }
-          currentActiveCount ++;
-          if (currentActiveCount === 3) {
-            var prevIndex = cardsIndexes.shift();
-            var nextIndex = cardsIndexes.shift();
-            var prevCard = game.cardsList[prevIndex];
-            var nextCard = game.cardsList[nextIndex];
-            currentActiveCount = 1;
-            if (prevCard.value.lastElementChild.classList.contains('unequal')) {
-              setTimeout(function() {
-                prevCard.rotate();
-                nextCard.rotate();
-                prevCard.value.lastElementChild.classList.remove('unequal');
-                nextCard.value.lastElementChild.classList.remove('unequal');
-                prevCard.setRotateState();
-                nextCard.setRotateState();
-              }, 1000);
+  game.desk.addEventListener('click', function(event) {
+    if (event.target.tagName === 'SPAN') {
+      if (!idTimer) {
+        idTimer = setTimeout(function nextTime() {
+          var timeString = '';
+          timeString = timer < 10 ? '00:0' + timer : '00:' + timer;
+          game.timer.innerHTML = timeString;
+          timer --;
+          // if the time ran out and not game over
+          if (timer >= 0 && !game.isWin) timerId = setTimeout(nextTime, 1000);
+          else game.isWin ? game.togglePopup(true) : game.togglePopup(false);
+        }, 1000);
+      }
+    } 
+  });
+  game.desk.addEventListener('click', function(event) { 
+    if (timer > 0) {
+      if (event.target.tagName === 'SPAN') {
+        var card = game.cardsList[event.target.parentNode.id];
+        if (card.toRotate) {
+          card.rotate();
+          // check that cards which not compare
+          var openedNotCompareCards = game.cardsList.filter(function(item) {
+            if (item.isOpen && item.isSingle) return true;
+            else return false;
+          });
+          // if exist cards wich open but not compare - to compare
+          if (openedNotCompareCards.length) {
+            openedNotCompareCards[0].isEqual(card);
+            game.isWin = game.cardsList.every(function(item) {
+              return (item.elem.lastElementChild.classList.contains('equal'));
+            });
+            openedNotCompareCards[0].isSingle = false;
+          } else {
+            card.isSingle = true;
+            // check that cards which not equal
+            var openedNotEqualCards = game.cardsList.filter(function(item) {
+              if (item.isNotEqual) return true;
+              else return false;
+            });
+            // if exist cards wich not equal - close
+            if (openedNotEqualCards.length) {
+              openedNotEqualCards.forEach(function(item) {
+                item.toRotate = true;
+                item.rotate();
+                item.isNotEqual = false;
+                item.elem.lastElementChild.classList.remove('unequal');
+              });
             }
-          }
-        } else { // карта закрылась - удаляем ее индекс из массива
-          cardsIndexes.pop(index);
-          currentActiveCount --;
+          } 
         }
-      } else console.log('the card is disabled!');
+      }   
     }
   });
 
+  var popupBtn = document.querySelector('.popup-btn');
+  popupBtn.addEventListener('click', function() {
+    game.rePlay(emodji);
+    idTimer = null;
+    timer = 59;
+  });
+  
 };
